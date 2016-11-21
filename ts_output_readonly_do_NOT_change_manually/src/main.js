@@ -2,16 +2,23 @@ var gamingPlatform;
 (function (gamingPlatform) {
     var main;
     (function (main) {
-        // Feel free to change to your own Firebase URL :)
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDvbUblHfA5eJe5sK1Xy-xC_tfV4y4PgQE",
-            authDomain: "signalling-d073b.firebaseapp.com",
-            databaseURL: "https://signalling-d073b.firebaseio.com",
-            storageBucket: "signalling-d073b.appspot.com",
-            messagingSenderId: "308144322392"
-        };
-        firebase.initializeApp(config);
+        var hasAlertedIlana = false;
+        function getIframeSourceURL() {
+            if (!hasAlertedIlana) {
+                console.debug('%c DEAR ILANA YOU NEED TO LOOK AT THIS CODE AND CHANGE PROD_URL BELOW TO https://ilanasufrin.github.io/Simon LOVE TRAVIS', 'font-size: 64px');
+                hasAlertedIlana = true;
+            }
+            var PROD_URL = 'https://traviskaufman.github.io/Simon';
+            var hostname = gamingPlatform.$location.host();
+            var isDev = Boolean(~[
+                'localhost',
+                '0.0.0.0',
+                '127.0.0.1'
+            ].indexOf(hostname));
+            return gamingPlatform.$sce.trustAsResourceUrl(isDev ? "http://" + hostname + ":8081/" : PROD_URL);
+        }
+        main.getIframeSourceURL = getIframeSourceURL;
+        // ----------------------------------------
         main.matches = [];
         // Saving as json because firebase has restriction on keys (and we use "data: any").
         // Example error: Firebase.set failed: First argument  contains an invalid key (playerId0.5446834512026781) in property 'matches.0.playerIdToProposal'.  Keys must be non-empty strings and can't contain ".", "#", "$", "/", "[", or "]"
@@ -81,7 +88,7 @@ var gamingPlatform;
         }
         main.isInPage = isInPage;
         function isInPagePlayGame() {
-            return isInPage("/playGame/");
+            return true;
         }
         function showGameIframe() {
             return isInPagePlayGame() && gamingPlatform.messageSender.didGetGameReady();
@@ -179,26 +186,21 @@ var gamingPlatform;
                 sendCommunityUI();
             });
         });
-        angular.module('MyApp', ['ngMaterial', 'ngRoute'])
-            .config(['$routeProvider', function ($routeProvider) {
+        angular.module('MyApp', ['ngMaterial', 'ngRoute', gamingPlatform.chat.module.name])
+            .config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $mdThemingProvider) {
                 $routeProvider.
-                    when('/main', {
+                    when('/', {
                     templateUrl: 'html-templates/mainPage.html',
                     controller: ''
                 }).
-                    when('/playGame/:matchIndex', {
-                    templateUrl: 'html-templates/playPage.html',
-                    controller: 'PlayGameCtrl'
-                }).
                     otherwise({
-                    redirectTo: '/main'
+                    redirectTo: '/'
                 });
-            }])
-            .controller('PlayGameCtrl', ['$routeParams',
-            function ($routeParams) {
-                var matchIndex = $routeParams["matchIndex"];
-                gamingPlatform.log.info("PlayGameCtrl matchIndex=", matchIndex);
-                loadMatch(matchIndex);
+                $mdThemingProvider
+                    .theme('default')
+                    .primaryPalette('green')
+                    .accentPalette('orange')
+                    .dark();
             }])
             .run([
             '$timeout', '$interval',
@@ -223,8 +225,7 @@ var gamingPlatform;
                 gamingPlatform.$sce = _sce; // It's module-specific, or else I get: Error: [$sce:unsafe] Attempting to use an unsafe value in a safe context.
                 gamingPlatform.log.alwaysLog("Angular loaded!");
                 gamingPlatform.$rootScope['main'] = main;
-            }
-        ]);
+            }]);
     })(main = gamingPlatform.main || (gamingPlatform.main = {}));
 })(gamingPlatform || (gamingPlatform = {}));
 //# sourceMappingURL=main.js.map

@@ -14,50 +14,46 @@
 
   <!-- Angular Material Library -->
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.js"></script>
-  
+
   <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-database.js"></script>
 
   <!-- Your application  -->
+  <script charset="utf-8">
+    (function(firebase) {
+      const config = {
+        apiKey: "AIzaSyCbQUyPtxL742NiLEpKls2buOWuEiN_sXs",
+        authDomain: "mpgameschat.firebaseapp.com",
+        databaseURL: "https://mpgameschat.firebaseio.com",
+        storageBucket: "mpgameschat.appspot.com",
+        messagingSenderId: "962120801075"
+      };
+      firebase.initializeApp(config);
+    })(window.firebase);
+  </script>
+  <script src="ts_output_readonly_do_NOT_change_manually/src/chat/index.js"></script>
+  <script src="ts_output_readonly_do_NOT_change_manually/src/chat/firebase.service.js"></script>
+  <script src="ts_output_readonly_do_NOT_change_manually/src/chat/game-chat.component.js"></script>
   <script src="ts_output_readonly_do_NOT_change_manually/src/log.js"></script>
   <script src="ts_output_readonly_do_NOT_change_manually/src/messageSender.js"></script>
   <script src="ts_output_readonly_do_NOT_change_manually/src/main.js"></script>
-  
-
-<script type="text/ng-template" id="html-templates/playPage.html">
-<md-toolbar>
-  Play page!
-</md-toolbar>
-</script>
-
-<script type="text/ng-template" id="html-templates/mainPage.html">
-<md-toolbar>
-  <div class="md-toolbar-tools">
-    <img ng-src="{{main.myPlayerInfo.avatarImageUrl}}"
-              alt="Your avatar" 
-              class="avatar">
-    <h3>Hi {{main.myPlayerInfo.displayName}}! (You play {{main.myPlayerInfo.myCommunityPlayerIndex == 0 ? 'Black' : 'White'}})</h3>
-  </div>
-</md-toolbar>
-
-  <md-content flex>
-    <md-list>
-      <md-list-item 
-          ng-click="main.gotoPlayPage($index)" 
-          ng-repeat="match in main.matches track by $index">
-        <p>{{match.matchName}} {{main.isYourTurn(match) ? "(your turn)" : ""}}</p>
-      </md-list-item>
-    </md-list>
-  </md-content>
-</script>
-
 </head>
 <body ng-cloak>
-  
-  <div ng-view class="full_screen"></div> 
-  <div ng-show="main.showGameIframe()" id="game_container">
-    <iframe id="game_iframe" src="https://yoav-zibin.github.io/smpgWEIQI/index.html" seamless="seamless"></iframe>
-  </div>
-  
+  <div ng-view layout="column"></div>
+  <script type="text/ng-template" id="html-templates/mainPage.html">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span>Simon 🤖</span>
+      </div>
+    </md-toolbar>
+    <md-content id="main-content" layout>
+      <div ng-show="main.showGameIframe()" id="game_container" flex="80">
+        <iframe id="game_iframe" ng-src="{{main.getIframeSourceURL()}}" seamless="seamless"></iframe>
+      </div>
+
+      <game-chat flex="30"></game-chat>
+    </md-content>
+  </script>
 </body>
 </html>

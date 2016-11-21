@@ -5,14 +5,14 @@ var gamingPlatform;
         var ILogLevel = (function () {
             function ILogLevel() {
             }
+            ILogLevel.ALWAYS = 'ALWAYS';
+            ILogLevel.LOG = 'LOG';
+            ILogLevel.INFO = 'INFO';
+            ILogLevel.DEBUG = 'DEBUG';
+            ILogLevel.WARN = 'WARN';
+            ILogLevel.ERROR = 'ERROR';
             return ILogLevel;
         }());
-        ILogLevel.ALWAYS = 'ALWAYS';
-        ILogLevel.LOG = 'LOG';
-        ILogLevel.INFO = 'INFO';
-        ILogLevel.DEBUG = 'DEBUG';
-        ILogLevel.WARN = 'WARN';
-        ILogLevel.ERROR = 'ERROR';
         var alwaysLogs = [];
         var lastLogs = [];
         var startTime = getCurrentTime();

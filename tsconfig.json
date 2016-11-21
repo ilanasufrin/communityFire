@@ -13,13 +13,14 @@
         "newLine": "CRLF"
     },
     "filesGlob": [
-        "./**/*.ts",
+        "./typings/index.d.ts",
+        "./src/**/*.ts",
         "!./node_modules/**/*.ts"
     ],
     "formatCodeOptions": {
         "indentSize": 2,
         "tabSize": 2,
-        "newLineCharacter": "\r\n",
+        "newLineCharacter": "\n",
         "convertTabsToSpaces": true,
         "insertSpaceAfterCommaDelimiter": true,
         "insertSpaceAfterSemicolonInForStatements": true,
@@ -32,9 +33,12 @@
     },
     "files": [
         "./typings/index.d.ts",
+        "./src/chat/firebase.service.ts",
+        "./src/chat/game-chat.component.ts",
+        "./src/chat/index.ts",
         "./src/log.ts",
-        "./src/messageSender.ts",
-        "./src/main.ts"
+        "./src/main.ts",
+        "./src/messageSender.ts"
     ],
     "atom": {
         "rewriteTsconfig": true

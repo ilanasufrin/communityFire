@@ -2,13 +2,8 @@ var gamingPlatform;
 (function (gamingPlatform) {
     var main;
     (function (main) {
-        var hasAlertedIlana = false;
         function getIframeSourceURL() {
-            if (!hasAlertedIlana) {
-                console.debug('%c DEAR ILANA YOU NEED TO LOOK AT THIS CODE AND CHANGE PROD_URL BELOW TO https://ilanasufrin.github.io/Simon LOVE TRAVIS', 'font-size: 64px');
-                hasAlertedIlana = true;
-            }
-            var PROD_URL = 'https://traviskaufman.github.io/Simon';
+            var PROD_URL = 'https://ilanasufrin.github.io/Simon';
             var hostname = gamingPlatform.$location.host();
             var isDev = Boolean(~[
                 'localhost',

@@ -57,7 +57,7 @@ namespace gamingPlatform {
 
   export namespace main {
     export function getIframeSourceURL() {
-      const PROD_URL = 'https://traviskaufman.github.io/Simon'
+      const PROD_URL = 'https://ilanasufrin.github.io/Simon'
       const hostname = $location.host();
       const isDev = Boolean(~[
         'localhost',

@@ -181,19 +181,7 @@ namespace gamingPlatform {
 
     let lastCommunityUI: ICommunityUI = null;
     function sendCommunityUI() {
-      let match = matches[currentMatchIndex];
-      let communityUI: ICommunityUI = {
-        yourPlayerIndex: myPlayerInfo.myCommunityPlayerIndex,
-        yourPlayerInfo: myPlayerInfo,
-        playerIdToProposal: match.playerIdToProposal,
-        numberOfPlayers: match.numberOfPlayers,
-        stateBeforeMove: match.stateBeforeMove,
-        turnIndexBeforeMove: match.turnIndexBeforeMove,
-        move: match.move,
-      }
-      log.info("sendCommunityUI: ", communityUI);
-      lastCommunityUI = communityUI;
-      messageSender.sendToGame({ communityUI: communityUI });
+      // NOP: No CommunityUI for this game
     }
 
     window.addEventListener("message", function(event) {
@@ -293,6 +281,35 @@ namespace gamingPlatform {
 
           log.alwaysLog("Angular loaded!");
           $rootScope['main'] = main;
+
+          // Send the updateUI message to the game. Or rather queue it I guess.
+          gamingPlatform.messageSender.sendToGame({
+            updateUI: {
+              move: {
+                endMatchScores: null,
+                stateAfterMove: undefined,
+                turnIndexAfterMove: 0
+              },
+              numberOfPlayers: 2,
+              playMode: "passAndPlay",
+              playersInfo: [
+                {
+                  avatarImage: null,
+                  displayName: null,
+                  playerId: "42"
+                },
+                {
+                  avatarImage: null,
+                  displayName: null,
+                  playerId: "69"
+                }
+              ],
+              stateBeforeMove: null,
+              turnIndexBeforeMove: 0,
+              turnIndexAfterMove: 0,
+              yourPlayerIndex: 0
+            }
+          });
         }]);
   }
 }

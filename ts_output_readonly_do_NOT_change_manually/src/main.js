@@ -122,19 +122,7 @@ var gamingPlatform;
         main.loadMatch = loadMatch;
         var lastCommunityUI = null;
         function sendCommunityUI() {
-            var match = main.matches[currentMatchIndex];
-            var communityUI = {
-                yourPlayerIndex: main.myPlayerInfo.myCommunityPlayerIndex,
-                yourPlayerInfo: main.myPlayerInfo,
-                playerIdToProposal: match.playerIdToProposal,
-                numberOfPlayers: match.numberOfPlayers,
-                stateBeforeMove: match.stateBeforeMove,
-                turnIndexBeforeMove: match.turnIndexBeforeMove,
-                move: match.move,
-            };
-            gamingPlatform.log.info("sendCommunityUI: ", communityUI);
-            lastCommunityUI = communityUI;
-            gamingPlatform.messageSender.sendToGame({ communityUI: communityUI });
+            // NOP: No CommunityUI for this game
         }
         window.addEventListener("message", function (event) {
             var game_iframe = window.document.getElementById("game_iframe");
@@ -220,6 +208,34 @@ var gamingPlatform;
                 gamingPlatform.$sce = _sce; // It's module-specific, or else I get: Error: [$sce:unsafe] Attempting to use an unsafe value in a safe context.
                 gamingPlatform.log.alwaysLog("Angular loaded!");
                 gamingPlatform.$rootScope['main'] = main;
+                // Send the updateUI message to the game. Or rather queue it I guess.
+                gamingPlatform.messageSender.sendToGame({
+                    updateUI: {
+                        move: {
+                            endMatchScores: null,
+                            stateAfterMove: undefined,
+                            turnIndexAfterMove: 0
+                        },
+                        numberOfPlayers: 2,
+                        playMode: "passAndPlay",
+                        playersInfo: [
+                            {
+                                avatarImage: null,
+                                displayName: null,
+                                playerId: "42"
+                            },
+                            {
+                                avatarImage: null,
+                                displayName: null,
+                                playerId: "69"
+                            }
+                        ],
+                        stateBeforeMove: null,
+                        turnIndexBeforeMove: 0,
+                        turnIndexAfterMove: 0,
+                        yourPlayerIndex: 0
+                    }
+                });
             }]);
     })(main = gamingPlatform.main || (gamingPlatform.main = {}));
 })(gamingPlatform || (gamingPlatform = {}));

@@ -47,12 +47,12 @@
         <span>Simon 🤖</span>
       </div>
     </md-toolbar>
-    <md-content id="main-content" layout>
-      <div ng-show="main.showGameIframe()" id="game_container" flex="80">
+    <md-content id="main-content" layout="column" layout-gt-md="row">
+      <div ng-show="main.showGameIframe()" id="game_container" flex="50" flex-gt-md="70">
         <iframe id="game_iframe" ng-src="{{main.getIframeSourceURL()}}" seamless="seamless"></iframe>
       </div>
 
-      <game-chat flex="30"></game-chat>
+      <game-chat flex="40" flex-gt-md="30"></game-chat>
     </md-content>
   </script>
 </body>
